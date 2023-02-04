@@ -32,7 +32,8 @@ function buzzStop() {
       <style>
 :root{
     --appButton1-size:17vw;
-    --appButton1-spacing:5vw;
+    --appButton1-max-size:7.5em;
+    --appButton1-spacing: 0;
     --header-height:13vh;
     --section-padding:1.2vw;
     --button-container-padding:2.5em 2.5em 1.5em;
@@ -104,7 +105,7 @@ section div{
 }
 #messageTypes div,#backgroundEffects div{
     display:flex;
-    justify-content:center;
+    justify-content:space-around;
     background:#FFEFFD;
     border-radius:24px;
     padding:var(--button-container-padding)
@@ -112,13 +113,16 @@ section div{
 .appButton1{
     height:var(--appButton1-size);
     width:var(--appButton1-size);
+    max-height:var(--appButton1-max-size);
+    max-width:var(--appButton1-max-size);
     margin:0 var(--appButton1-spacing);
     box-shadow:0 4px 4px rgba(0,0,0,.25);
     border-radius:8px;
     cursor:pointer
 }
 .appButton1Label{
-    margin-top:.5rem
+    margin-top:.5rem;
+    max-width:var(--appButton1-max-size);
 }
 #positiveMessageButton{
     background-color:#05FF00
