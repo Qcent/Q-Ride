@@ -57,7 +57,7 @@ body { overflow: hidden;}
 header{
     background:#FFDFFC;
     height:var(--header-height);
-    font-size:30pt;
+    font-size:1.8em;
     display:flex;
     align-items:center;
     justify-content:center
@@ -103,7 +103,7 @@ section div{
 }
 #txtinput{
     width:100%;
-    font-size:16px;
+    font-size:1em;
     padding:.6em;
     border:3px solid #9158DB;
     border-radius:calc(var(--messageDisplay-border-radius) + 4px);
@@ -168,8 +168,8 @@ section div{
 }
 #goButton{
     width:95%;
-    font-size:26pt;
-    padding:.5em;
+    font-size:2em;
+    padding:.6em;
     font-weight:600;
     color:#fff;
     background:linear-gradient(180deg,#9158DB 0%,#595FFA 168.88%);
@@ -237,6 +237,16 @@ section div{
      .menu-content {
         color:black;
     }
+}
+
+@media (max-height: 770px) {
+ :root{
+    font-size: .8rem;
+ }
+ section div{
+    margin:.4em 2.5vw .4em;
+    padding:.6em;
+ }
 }
          
 @media (max-width: 600px) {
