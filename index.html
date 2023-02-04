@@ -220,6 +220,35 @@ section div{
         color:black;
     }
 }
+         
+@media (max-width: 600px) {
+  #rainbowFX + .appButton1Label {
+   text-indent: -9999px;
+   line-height: 0; 
+  }
+ #rainbowFX + .appButton1Label:after {
+  content: "Dance";
+  text-indent: 0;
+  display: block;
+  line-height: normal;     
+ }
+ #rainbow2FX + .appButton1Label {
+   text-indent: -9999px;
+   line-height: 0; 
+  }
+ #rainbow2FX + .appButton1Label:after {
+  content: "Spin";
+  text-indent: 0;
+  display: block;
+  line-height: normal;     
+ }
+}
+
+@media (max-width: 375px) {
+    .appButton1Label {
+        font-size: 3.4vw;
+    }
+}
       </style>
    </head>
    <body onLoad='initHaptics();'>
