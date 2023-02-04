@@ -98,9 +98,7 @@ section div{
     border:2px solid #666;
     border-radius:var(--messageDisplay-border-radius);
 }
-#newMessage{
-    padding:0
-}
+#newMessage{ padding:0 }
 #txtinput{
     width:100%;
     font-size:1em;
@@ -280,6 +278,63 @@ section div{
    font-size: 3.4vw;
  }
 }
+
+@media (orientation: landscape) {
+    :root{
+   --appButton1-size:17vh;
+   --appButton1-max-size:7.5em;
+   --button-container-padding:.5em 0 .5em;
+   --menu-height: 58vh;
+   --section-padding: .5em 0 0;
+    }
+  #AppContainer{
+    flex-direction: row;
+    max-width:99%;    
+  }
+  #messageTypes div,#backgroundEffects div{
+    flex-direction: column;
+    align-items:center;
+      height:77vh
+  }
+  #messageTypes {
+        order:2;
+      flex: 1 1 20vw;
+  }
+  #messageDisplay {
+        order:1;
+      flex: 1 1 55vw;
+      margin-top:2em;   
+  }
+  #backgroundEffects {
+        order:0;
+      flex: 1 1 20vw;
+  }
+      #rainbowFX + .appButton1Label {
+   text-indent: -9999px;
+   line-height: 0; 
+  }
+ #rainbowFX + .appButton1Label:after {
+  content: "Dance";
+  text-indent: 0;
+  display: block;
+  line-height: normal;     
+ }
+ #rainbow2FX + .appButton1Label {
+   text-indent: -9999px;
+   line-height: 0; 
+  }
+ #rainbow2FX + .appButton1Label:after {
+  content: "Spin";
+  text-indent: 0;
+  display: block;
+  line-height: normal;     
+ }
+ #goButtonSection{
+    max-width: 55vw;
+    margin:-2.3em auto;
+ }
+}
+
       </style>
    </head>
    <body onLoad='initHaptics();'>
