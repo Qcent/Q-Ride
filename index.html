@@ -323,33 +323,40 @@ section div{
 
       <script>
 let menunum = 0;
+clearMenueButtons= ()=>{
+  let elems = document.querySelectorAll('.menuButton');
+        [].forEach.call(elems, function(el) {
+            el.classList.remove('selected');
+        });        
+}
 
 window.onclick = function(e) {
     if (e.target.matches('.textMessage')) {
         document.getElementById('txtinput').value = e.target.text;
     }
    
-   if (e.target.matches('.menuButton')) {
-     if(menunum) document.getElementById('messageMennu' + menunum).classList.toggle('show');
-     e.target.classList.toggle('selected');
-         if(menunum === e.target.dataset.menuNum){
+    if (e.target.matches('.menuButton')) {
+	 clearMenueButtons();
+         if(menunum) document.getElementById('messageMennu' + menunum).classList.toggle('show');
+
+         if(menunum === e.target.dataset.menunum){
             menunum=0;
          }
          else {
-            menunum = e.target.dataset.menuNum;
+            menunum = e.target.dataset.menunum;
             document.getElementById('messageMennu' + menunum).classList.toggle('show');
-            e.target.classList.toggle('selected');
+	    e.target.classList.add('selected');
          }
     }
-   
+
     if (!e.target.matches('.menuButton') && menunum) {
         var messageMennu = document.getElementById('messageMennu' + menunum);
         if (messageMennu.classList.contains('show')) {
             messageMennu.classList.remove('show');
             menunum = 0;
         }
-    }
-   
+	clearMenueButtons();
+    }   
    
     if (e.target.matches('.fxButton.selected')) {
         e.target.classList.remove('selected');
@@ -362,7 +369,6 @@ window.onclick = function(e) {
         e.target.classList.add('selected');
         document.getElementById('bgEffect').value = e.target.dataset.value;
     }
-}
       </script>
    </body>
 </html>
