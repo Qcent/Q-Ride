@@ -33,10 +33,11 @@ function buzzStop() {
 :root{
     --appButton1-size:17vw;
     --appButton1-max-size:7.5em;
-    --appButton1-spacing: 0;
     --header-height:13vh;
     --section-padding:.5em;
     --button-container-padding:2.5em 0 1.5em;
+    --menu-height: 35vh;
+    --messageDisplay-border-radius:16px;
 }
 *{
     box-sizing:border-box;
@@ -52,6 +53,7 @@ html{
     margin:0 auto;
     text-align:center
 }
+body { overflow: hidden;}
 header{
     background:#FFDFFC;
     height:var(--header-height);
@@ -94,7 +96,7 @@ section div{
     min-height:2.2em;
     padding:.6em;
     border:2px solid #666;
-    border-radius:8px
+    border-radius:var(--messageDisplay-border-radius);
 }
 #newMessage{
     padding:0
@@ -104,7 +106,7 @@ section div{
     font-size:16px;
     padding:.6em;
     border:3px solid #9158DB;
-    border-radius:8px
+    border-radius:calc(var(--messageDisplay-border-radius) + 4px);
 }
 #messageTypes div,#backgroundEffects div{
     display:flex;
@@ -118,7 +120,7 @@ section div{
     width:var(--appButton1-size);
     max-height:var(--appButton1-max-size);
     max-width:var(--appButton1-max-size);
-    margin:0 var(--appButton1-spacing);
+    background:#FFDFFC;
     box-shadow:0 4px 4px rgba(0,0,0,.25);
     border-radius:8px;
     cursor:pointer
@@ -172,17 +174,30 @@ section div{
     color:#fff;
     background:linear-gradient(180deg,#9158DB 0%,#595FFA 168.88%);
     box-shadow:0 4px 4px rgba(0,0,0,.25);
-    border-radius:18px;
+    border-radius:28px;
     cursor:pointer
 }
 .menu-content{
-    display:none;
+   
     position:absolute;
-    overflow:auto;
+    bottom:0;
+    left:1em;
+    width:calc(100% - 2em);
+    overflow:hidden;
     background-color:#f9f9f9;
     min-width:160px;
     box-shadow:0 8px 16px 0 rgba(0,0,0,.2);
-    z-index:1
+    z-index:1;
+    border-radius: 16px 16px 0 0 ;
+    height:0px;
+    transition: all .25s;
+}
+.menu-content h3{
+   margin:.6em 0 .3em;
+}
+.menu-options-container{
+   height: calc(var(--menu-height) - 3em);
+   overflow: auto;
 }
 .menu-content a{
     float:none;
@@ -195,13 +210,11 @@ section div{
 .menu-content a:hover{
     background-color:#ddd
 }
-.show{
-    display:block;
-    bottom:0;
-    left:1em;
-    height:30vh;
-    width:calc(100% - 2em)
+.menu-content.show{
+    height:var(--menu-height);
 }
+
+
 @media screen and (prefers-color-scheme: dark){
      body {
         background-color: #121212;
@@ -275,15 +288,15 @@ section div{
                <label>Message Types</label>
                <div>
                   <span>
-                     <article id='positiveMessageButton' class='appButton1 menuButton' data-menuNum=1 >&nbsp;</article>
+                     <article id='positiveMessageButton' class='appButton1 menuButton' data-menunum=1 >&nbsp;</article>
                      <article class='appButton1Label'>Positive</article>
                   </span>
                   <span>
-                     <article id='jokeMessageButton' class='appButton1 menuButton' data-menuNum=2 >&nbsp;</article>
+                     <article id='jokeMessageButton' class='appButton1 menuButton' data-menunum=2 >&nbsp;</article>
                      <article class='appButton1Label'>Joke</article>
                   </span>
                   <span>
-                     <article id='negativeMessageButton' class='appButton1 menuButton' data-menuNum=3 >&nbsp;</article>
+                     <article id='negativeMessageButton' class='appButton1 menuButton' data-menunum=3 >&nbsp;</article>
                      <article class='appButton1Label'>Negative</article>
                   </span>
                </div>
@@ -310,21 +323,24 @@ section div{
       </form>
       <div class='menu-content' id='messageMennu1'>
          <h3> Message Select </h3>
+	<div class='menu-options-container'>
          <a href='#' class='textMessage'>Thankyou!</a><a href='#' class='textMessage'>Slick Ride, Bro!</a><a href='#' class='textMessage'>Sorry Dude</a><a href='#' class='textMessage'>Nice Wheels!</a>
-      </div>
+      </div></div>
       <div class='menu-content' id='messageMennu2'>
          <h3> Message Select </h3>
+	<div class='menu-options-container'>
          <a href='#' class='textMessage'>This Vehicle Makes Frequent Stops... At Your Mom's House</a><a href='#' class='textMessage'>My other Maserati's in the shop!</a><a href='#' class='textMessage'>How's My Driving?</a><a href='#' class='textMessage'>I Brake For Hot Guys</a><a href='#' class='textMessage'>Please Do Not Hit Me</a><a href='#' class='textMessage'>She Doesn't Look Like Much, But She's Got It Where It Counts!</a><a href='#' class='textMessage'>There are two types of people in this world.... Those with LED displays in their cars and those without</a><a href='#' class='textMessage'>Honk! If You Like Walking</a>
-      </div>
+      </div></div>
       <div class='menu-content' id='messageMennu3'>
          <h3> Message Select </h3>
+	<div class='menu-options-container'>
          <a href='#' class='textMessage'>Back Off, Buddy!</a><a href='#' class='textMessage'>Beep! Beep! Grandma</a><a href='#' class='textMessage'>They Sure Don't Teach Driving Like They Used To!</a>
-      </div>
+      </div></div>
 
       <script>
 let menunum = 0;
-clearMenueButtons= ()=>{
-  let elems = document.querySelectorAll('.menuButton');
+const clearSelectedButtonsOfClass = (className)=>{
+  let elems = document.querySelectorAll(className);
         [].forEach.call(elems, function(el) {
             el.classList.remove('selected');
         });        
@@ -336,7 +352,7 @@ window.onclick = function(e) {
     }
    
     if (e.target.matches('.menuButton')) {
-	 clearMenueButtons();
+	 clearSelectedButtonsOfClass('.menuButton');
          if(menunum) document.getElementById('messageMennu' + menunum).classList.toggle('show');
 
          if(menunum === e.target.dataset.menunum){
@@ -355,20 +371,18 @@ window.onclick = function(e) {
             messageMennu.classList.remove('show');
             menunum = 0;
         }
-	clearMenueButtons();
+	clearSelectedButtonsOfClass('.menuButton');
     }   
    
     if (e.target.matches('.fxButton.selected')) {
         e.target.classList.remove('selected');
         document.getElementById('bgEffect').value = 0;
     } else if (e.target.matches('.fxButton')) {
-        let elems = document.querySelectorAll('.fxButton');
-        [].forEach.call(elems, function(el) {
-            el.classList.remove('selected');
-        });
+        clearSelectedButtonsOfClass('.fxButton');
         e.target.classList.add('selected');
         document.getElementById('bgEffect').value = e.target.dataset.value;
     }
+}
       </script>
    </body>
 </html>
