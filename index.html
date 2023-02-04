@@ -36,7 +36,7 @@ function buzzStop() {
     --appButton1-spacing: 0;
     --header-height:13vh;
     --section-padding:.5em;
-    --button-container-padding:2.5em 2.5em 1.5em;
+    --button-container-padding:2.5em 0 1.5em;
 }
 *{
     box-sizing:border-box;
@@ -108,7 +108,7 @@ section div{
 }
 #messageTypes div,#backgroundEffects div{
     display:flex;
-    justify-content:space-around;
+    justify-content:space-evenly;
     background:#FFEFFD;
     border-radius:24px;
     padding:var(--button-container-padding)
@@ -251,7 +251,7 @@ section div{
 
 @media (max-width: 375px) {
  :root{
-   --button-container-padding:2.5em 1em 1.5em;
+   --button-container-padding:2.5em 0 1.5em;
  }
  .appButton1Label {
    font-size: 3.4vw;
@@ -275,15 +275,15 @@ section div{
                <label>Message Types</label>
                <div>
                   <span>
-                     <article id='positiveMessageButton' class='appButton1 menuButton' onclick='showMenu(1)'>&nbsp;</article>
+                     <article id='positiveMessageButton' class='appButton1 menuButton' data-menuNum=1 >&nbsp;</article>
                      <article class='appButton1Label'>Positive</article>
                   </span>
                   <span>
-                     <article id='jokeMessageButton' class='appButton1 menuButton' onclick='showMenu(2)'>&nbsp;</article>
+                     <article id='jokeMessageButton' class='appButton1 menuButton' data-menuNum=2 >&nbsp;</article>
                      <article class='appButton1Label'>Joke</article>
                   </span>
                   <span>
-                     <article id='negativeMessageButton' class='appButton1 menuButton' onclick='showMenu(3)'>&nbsp;</article>
+                     <article id='negativeMessageButton' class='appButton1 menuButton' data-menuNum=3 >&nbsp;</article>
                      <article class='appButton1Label'>Negative</article>
                   </span>
                </div>
@@ -324,15 +324,24 @@ section div{
       <script>
 let menunum = 0;
 
-function showMenu(num) {
-    if (menunum) document.getElementById('messageMennu' + menunum).classList.toggle('show');
-    menunum = num;
-    document.getElementById('messageMennu' + num).classList.toggle('show');
-}
 window.onclick = function(e) {
     if (e.target.matches('.textMessage')) {
         document.getElementById('txtinput').value = e.target.text;
     }
+   
+   if (e.target.matches('.menuButton')) {
+     document.getElementById('messageMennu' + menunum).classList.toggle('show');
+     e.target.classList.toggle('selected');
+         if(menunum === e.target.dataset.menuNum){
+            menunum=0;
+         }
+         else {
+            menunum = e.target.dataset.menuNum;
+            document.getElementById('messageMennu' + menunum).classList.toggle('show');
+            e.target.classList.toggle('selected');
+         }
+    }
+   
     if (!e.target.matches('.menuButton') && menunum) {
         var messageMennu = document.getElementById('messageMennu' + menunum);
         if (messageMennu.classList.contains('show')) {
@@ -340,6 +349,8 @@ window.onclick = function(e) {
             menunum = 0;
         }
     }
+   
+   
     if (e.target.matches('.fxButton.selected')) {
         e.target.classList.remove('selected');
         document.getElementById('bgEffect').value = 0;
