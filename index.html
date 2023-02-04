@@ -330,7 +330,7 @@ window.onclick = function(e) {
     }
    
    if (e.target.matches('.menuButton')) {
-     document.getElementById('messageMennu' + menunum).classList.toggle('show');
+     if(menunum) document.getElementById('messageMennu' + menunum).classList.toggle('show');
      e.target.classList.toggle('selected');
          if(menunum === e.target.dataset.menuNum){
             menunum=0;
